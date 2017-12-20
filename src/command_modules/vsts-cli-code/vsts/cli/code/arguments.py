@@ -19,6 +19,12 @@ def load_code_arguments(cli_command_loader):
         ac.argument('reviewers', nargs='*')
         ac.argument('detect', **enum_choice_list(_ON_OFF_SWITCH_VALUES))
 
+    with ArgumentsContext(cli_command_loader, 'code branch') as ac:
+        ac.argument('repository', options_list=('--repository', '-r'))
+
+    with ArgumentsContext(cli_command_loader, 'code branch show') as ac:
+        ac.argument('name', options_list=('--name', '-n'))
+
     with ArgumentsContext(cli_command_loader, 'code pr') as ac:
         ac.argument('description', type=str, options_list=('--description', '-d'))
         ac.argument('pull_request_id', type=int, options_list='--id')
@@ -38,7 +44,7 @@ def load_code_arguments(cli_command_loader):
 
     with ArgumentsContext(cli_command_loader, 'code pr work-items') as ac:
         ac.argument('work_items', nargs='+')
-        
+
     with ArgumentsContext(cli_command_loader, 'code pr update') as ac:
         ac.argument('auto_complete', **enum_choice_list(_ON_OFF_SWITCH_VALUES))
         ac.argument('squash', **enum_choice_list(_ON_OFF_SWITCH_VALUES))

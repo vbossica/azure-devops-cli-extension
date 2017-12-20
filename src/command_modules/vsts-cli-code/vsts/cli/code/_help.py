@@ -13,6 +13,12 @@ helps['code'] = """
     long-summary:
 """
 
+helps['code branch'] = """
+    type: group
+    short-summary: Manage branches.
+    long-summary:
+"""
+
 helps['code pr'] = """
     type: group
     short-summary: Manage pull requests.

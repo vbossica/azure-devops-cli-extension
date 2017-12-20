@@ -17,6 +17,12 @@ from ._format import (transform_pull_request_table_output,
 
 def load_code_commands(cli_command_loader):
     with CommandGroup(cli_command_loader, 'code', 'vsts.cli.code.common.{}') as g:
+        # branch commands
+        g.command('branch create', 'branch#create_branch')
+        g.command('branch delete', 'branch#delete_branch')
+        g.command('branch list', 'branch#list_branches')
+        g.command('branch show', 'branch#show_branch')
+
         # basic pr commands
         g.command('pr create', 'pull_request#create_pull_request',
                   table_transformer=transform_pull_request_table_output)
