@@ -3,7 +3,39 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
+import unittest
+try:
+    # Attempt to load mock (works on Python 3.3 and above)
+    from unittest.mock import patch
+except ImportError:
+    # Attempt to load mock (works on Python version below 3.3)
+    from mock import patch
+
+
 TEST_DEVOPS_ORG_URL = "https://someorg.visualstudio.com"
+
+
+class AuthenticatedTests(unittest.TestCase):
+    """
+    Base class for tests that require authentication.
+      - call self.authentication_setUp() in the setUp() method
+      - call self.authenticate at the beginning of each test method
+    """
+
+    def authentication_setUp(self):
+        self.resolve_identity_patcher = patch('azext_devops.dev.common.identities.resolve_identity_as_id')
+        self.get_credential_patcher = patch('azext_devops.dev.common.services.get_credential')
+        self.validate_token_patcher = patch('azext_devops.dev.common.services.validate_token_for_instance')
+
+        # start the patchers
+        self.mock_resolve_identity = self.resolve_identity_patcher.start()
+        self.mock_get_credential = self.get_credential_patcher.start()
+        self.mock_validate_token = self.validate_token_patcher.start()
+
+    def authenticate(self):
+        # set return values
+        self.mock_validate_token.return_value = True
+
 
 # Use this when mocking multiple get clients is required for a single test.
 def get_client_mock_helper(_self_dummy, client_type):

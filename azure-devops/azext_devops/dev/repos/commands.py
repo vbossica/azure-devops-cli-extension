@@ -13,6 +13,7 @@ from ._format import (transform_pull_request_table_output,
                       transform_refs_table_output,
                       transform_reviewers_table_output,
                       transform_reviewer_table_output,
+                      transform_tag_table_output,
                       transform_policies_table_output,
                       transform_policy_table_output,
                       transform_work_items_table_output,
@@ -27,11 +28,17 @@ reposPullRequestOps = CliCommandType(
 )
 
 reposRefOps = CliCommandType(
-    operations_tmpl='azext_devops.dev.repos.ref#{}'
+    operations_tmpl='azext_devops.dev.repos.ref#{}',
+    exception_handler=azure_devops_exception_handler
 )
 
 reposRepositoryOps = CliCommandType(
     operations_tmpl='azext_devops.dev.repos.repository#{}',
+    exception_handler=azure_devops_exception_handler
+)
+
+reposTagOps = CliCommandType(
+    operations_tmpl='azext_devops.dev.repos.tag#{}',
     exception_handler=azure_devops_exception_handler
 )
 
@@ -138,3 +145,8 @@ def load_code_commands(self, _):  # pylint: disable=too-many-statements
         g.command('list', 'list_refs', table_transformer=transform_refs_table_output)
         g.command('lock', 'lock_ref', table_transformer=transform_ref_table_output)
         g.command('unlock', 'unlock_ref', table_transformer=transform_ref_table_output)
+
+    with self.command_group('repos tag', command_type=reposTagOps) as g:
+        # tag commands
+        g.command('create', 'tag#create_tag', table_transformer=transform_tag_table_output)
+        g.command('show', 'tag#show_tag', table_transformer=transform_tag_table_output)

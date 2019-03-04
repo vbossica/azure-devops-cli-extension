@@ -102,3 +102,9 @@ def load_repos_help():
     short-summary: Manage Git references.
     long-summary:
     """
+
+    helps['repos tag'] = """
+        type: group
+        short-summary: Manage annotated tags.
+        long-summary:
+    """

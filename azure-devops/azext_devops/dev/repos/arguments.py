@@ -132,3 +132,11 @@ def load_code_arguments(self, _):
     with self.argument_context('repos ref') as context:
         context.argument('repository', options_list=('--repository', '-r'))
         context.argument('object_id', options_list=('--object-id'))
+
+    with self.argument_context('repos tag') as context:
+        context.argument('repository', options_list=('--repository', '-r'))
+        context.argument('object_id', options_list=('--object-id'))
+
+    with self.argument_context('repos tag create') as context:
+        context.argument('name', options_list=('--name', '-n'))
+        context.argument('message', options_list=('--message', '-m'))

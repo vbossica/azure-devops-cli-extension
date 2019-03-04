@@ -112,6 +112,20 @@ def _transform_reviewer_row(row):
     return table_row
 
 
+def transform_tag_table_output(result):
+    table_output = [_transform_tag_row(result)]
+    return table_output
+
+
+def _transform_tag_row(row):
+    table_row = OrderedDict()
+    table_row['ID'] = row['objectId']
+    table_row['Name'] = row['name']
+    if row['message']:
+        table_row['Message'] = row['message']
+    return table_row
+
+
 def transform_work_items_table_output(result):
     table_output = []
     for item in result:
